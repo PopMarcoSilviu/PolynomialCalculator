@@ -1,0 +1,19 @@
+@startuml
+'https://plantuml.com/use-case-diagram
+left to right direction
+
+actor User
+
+rectangle PolynomialCalculator{
+    User -> (InsertFirstPolynomial)
+    User -> (InsertSecondPolynomial)
+    User -> (ChooseOperation)
+    note right of (InsertSecondPolynomial)
+        Optional input
+    end note
+
+    (DisplayResultOfOperation) -> User
+    (DisplayResultOfOperation) .-> (CalculateResult) : includes
+    (DisplayResultOfOperation) .> (ExceptionCase) : includes
+}
+@enduml

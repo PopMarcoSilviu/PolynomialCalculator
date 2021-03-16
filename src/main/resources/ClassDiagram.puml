@@ -1,0 +1,256 @@
+@startuml
+'https://plantuml.com/class-diagram
+allow_mixing
+class Constants
+{
++EPSILON = 0.001
+}
+
+class Controller
+{
+-MainMenu
+-State
+-Controller()
+-deleteLastCharacterAction()
+-resetAction()
+-divisionAction()
+-derivationAction()
+-integrationAction()
+-subtractionAction()
+-multiplicationAction()
+-additionAction()
+-numberPressed()
++inputOutput(int mode)
+-setOutput(boolean exceptionCase)
+-setOutputState()
+}
+
+Controller *-- State
+Controller *-- MainMenu
+
+class State
+{
+-input1
+-input2
+-output1
+-output1
+-operationSelectedLast
+-exception
+-errorMessage
++State()
++resetState()
++Setters()
++Getters()
+}
+
+State *-- Polynomial
+
+class IncompatibleMonomialsForOperationException
+{
++IncompatibleMonomialsForOperationException()
+}
+IncompatibleMonomialsForOperationException <|.. Exception
+
+class MonomialPowerAlreadyExists
+{
++MonomialPowerAlreadyExists()
+}
+MonomialPowerAlreadyExists <|.. Exception
+class OperandNullException
+{
++OperandNullException()
+}
+OperandNullException <|.. Exception
+
+class Polynomial
+{
+}
+
+interface ForMessage
+{
++apply()
+}
+
+class Monomial
+{
+-power
+-coefficient
++Monomial()
++toString()
++equals()
++Getters()
++Setters()
+}
+
+enum Operations
+{
+    X
+    filler1
+    filler2
+    filler3
+    filler4
+    space
+    Integration
+    Division
+    Addition
+    Multiplication
+    Subtraction
+    Derivation
+}
+
+class Polynomial
+{
+-monomialList
++Polynomial(List<Monomial> monomialList)
++Polynomial()
++addNewMonomialTerm(Monomial monomial)
++sortPowers()
++addMonomialTerm(Monomial monomial)
++toString()
++equals(Object obj)
++getNumberOfMonomials()
++getMonomialList()
+}
+
+class PolynomialPair
+{
+-quotient
+-reminder
++PolynomialPair()
++toString()
++equals()
++Setters()
++Getters()
+}
+
+class ResultMessageWrapper
+{
++ResultMessageWrapper()
++toString()
++Setters()
++Getters()
+}
+
+interface TestInterface
+{
++ResultMessageWrapper()
++toString()
++Setters()
++Getters()
+}
+
+Polynomial *.. Monomial
+PolynomialPair *.. Polynomial
+State o-- Operations
+CheckIfOperandNull o-- Polynomial
+TestInterface --o MonomialCalculator
+ResultMessageWrapper --o MonomialCalculator
+Monomial --o MonomialCalculator
+PolynomialCalculator o-- Polynomial
+
+class CheckIfOperandNull
+{
++test(Polynomial polynomial, Polynomial polynomial1)
+}
+
+class CompareMonomialPower
+{
++compare(Monomial o1, Monomial o2)
+}
+
+class MonomialCalculator
+{
+-genericOperation(TestInterface<Double, ResultMessageWrapper<Double, String>> f,
+     TestInterface<Double, ResultMessageWrapper<Double, String>> f1,
+             Monomial firstMonomial, Monomial secondMonomial)
+}
+
+StringToPolynomial o-- Monomial
+CheckPowerAlreadyExistsValidation o-- Monomial
+OperationValidation o--ResultMessageWrapper
+
+MonomialCalculator *-- OperationValidation
+
+class PolynomialCalculator
+{
++add(Polynomial polynomial1, Polynomial polynomial2)
++subtract(Polynomial polynomial1, Polynomial polynomial2)
++multiply(Polynomial polynomial1, Polynomial polynomial2)
++divide(Polynomial polynomial1, Polynomial polynomial2)
+-addSubOperation(Polynomial polynomial1, Polynomial polynomial2, boolean addition)
++integrate(Polynomial polynomial)
++derive(Polynomial polynomial)
+
+}
+
+class StringToPolynomial
+{
++transform(String stringPolynomial)
+-formatString(String stringPolynomial)
+}
+
+StringToPolynomial *-- Monomial
+
+class CheckPowerAlreadyExistsValidation
+{
++exists(List<Monomial> monomialList, Monomial monomial)
+}
+CheckPowerAlreadyExistsValidation *--Monomial
+
+class OperationValidation
+{
++checkPower()
++checkDivisionBy0()
++OperationValidation()
+}
+OperationValidation <|.. TestInterface
+
+class MainMenu
+{
+-xSize = 1000
+-ySize = 600
+-superThickBorderThickness = 5.0f
+-listOfOperatorsSymbols
+-selectedValue
+-numbersButtonList
+-mainFrame
+-textPanel
+-buttonsPanel
+-numbersButtonsPanel
+-operandsAndResults
+-buttonList
+-selected
+-reset
+-deleteLastCharacter
++MainMenu()
++setFontSize(int fontSize)
++setResizable()
++setActionListenerForInput(ActionListener e)
++getStringForPressedButton()
++setActionListenerForNumberButtons(ActionListener e)
++getStringForPressedNumber()
++setTextForSelectedInputTextField(String value)
++setSelectedTextField()
++getSelected()
++getInput(int textFieldIndex)
++setOutput(String output, int textFieldIndex)
++setActionListenerForMultiplication(ActionListener e)
++setActionListenerForAddition(ActionListener e)
++setActionListenerForSubtraction(ActionListener e)
++setActionListenerForIntegration(ActionListener e)
++setActionListenerForDifferentiation(ActionListener e)
++setActionListenerForDivision(ActionListener e)
++setActionListenerForReset(ActionListener e)
++setActionListenerForDeleteLastCharacter(ActionListener e)
++setInputTextField(String value, int index)
+}
+
+
+class MainMenu
+{
++main(String[] args)
+}
+
+MainMenu *-- Controller
+
+@enduml
